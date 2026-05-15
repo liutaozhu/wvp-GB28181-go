@@ -12,10 +12,8 @@ import group from './modules/group'
 import server from './modules/server'
 import play from './modules/play'
 import playback from './modules/playback'
-import streamPush from './modules/streamPush'
 import streamProxy from './modules/streamProxy'
 import recordPlan from './modules/recordPlan'
-import cloudRecord from './modules/cloudRecord'
 import platform from './modules/platform'
 import role from './modules/role'
 import userApiKeys from './modules/userApiKeys'
@@ -40,10 +38,8 @@ const store = new Vuex.Store({
     server,
     play,
     playback,
-    streamPush,
     streamProxy,
     recordPlan,
-    cloudRecord,
     platform,
     role,
     userApiKeys,

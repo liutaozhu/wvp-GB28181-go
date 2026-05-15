@@ -144,8 +144,8 @@ export default {
     handleClick: function(tab, event) {
     },
     treeNodeClickEvent: function(data) {
-      if (data.leaf) {
-        this.$emit('clickEvent', data.id)
+      if (data.isLeaf || data.leaf) {
+        this.$emit('clickEvent', data.deviceId || data.id)
       }
     },
     refresh: function(id) {

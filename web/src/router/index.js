@@ -46,7 +46,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/live',
     children: [{
       path: 'dashboard',
       name: '控制台',
@@ -129,12 +129,6 @@ export const constantRoutes = [
         meta: { title: '部标录像' }
       },
       {
-        path: '/push',
-        name: 'PushList',
-        component: () => import('@/views/streamPush/index'),
-        meta: { title: '推流列表', icon: 'streamPush' }
-      },
-      {
         path: '/proxy',
         name: 'Proxy',
         component: () => import('@/views/streamProxy/index'),
@@ -186,26 +180,6 @@ export const constantRoutes = [
         name: 'RecordPlan',
         component: () => import('@/views/recordPlan/index'),
         meta: { title: '录制计划', icon: 'recordPlan' }
-      }
-    ]
-  },
-  {
-    path: '/cloudRecord',
-    component: Layout,
-    redirect: '/cloudRecord',
-    onlyIndex: 0,
-    children: [
-      {
-        path: '/cloudRecord',
-        name: 'CloudRecord',
-        component: () => import('@/views/cloudRecord/index'),
-        meta: { title: '云端录像', icon: 'cloudRecord' }
-      },
-      {
-        path: '/cloudRecord/detail/:app/:stream',
-        name: 'CloudRecordDetail',
-        component: () => import('@/views/cloudRecord/detail'),
-        meta: { title: '云端录像详情' }
       }
     ]
   },

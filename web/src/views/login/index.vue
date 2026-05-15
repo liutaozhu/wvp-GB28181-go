@@ -7,14 +7,14 @@
       width: 100%;
       height: 100vh;
       display: flex;
-      background-image: url(/static/images/bg19.webp);
+      background-image: url(/static/images/bg19.png);
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;"
     >
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
         <div class="title-container">
-          <h3 class="title">WVP视频平台</h3>
+          <h3 class="title">VMS视频平台</h3>
         </div>
 
         <el-form-item prop="username">

@@ -1,0 +1,72 @@
+# WVP-PRO-GO Configuration
+# GB28181 Video Platform - Go Implementation
+
+# Server configuration
+server:
+  port: 18080
+  mode: release  # debug, release, test
+
+# Database configuration
+database:
+  driver: mysql       # mysql, postgres
+  host: 127.0.0.1
+  port: 3306
+  dbname: wvp
+  auto_migrate: false
+  username: root
+  password: Root@123456
+  charset: utf8mb4
+
+# Redis configuration
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 7
+
+# SIP (GB28181) configuration
+sip:
+  ip: ""              # Auto-detect if empty
+  port: 8116
+  domain: "4101050000"
+  id: "41010500002000000001"
+  password: "12345678"
+  alarm: false
+
+# Media server (ZLMediaKit) configuration
+media:
+  id: "zlmediakit-local"
+  ip: "127.0.0.1"
+  wan-ip: ""
+  hook-ip: "127.0.0.1"
+  http-port: 8080
+  secret: "xe06zihgI32aiZ4wY5Nozms1Jk8tcGJy"
+  type: zlm
+  rtp:
+    enable: true
+    port-range: "40000,45000"
+    send-port-range: "50000,55000"
+
+# User settings
+user-settings:
+  play-timeout: 180000
+  auto-apply-play: true
+  record-push-live: true
+  record-sip: true
+  stream-on-demand: true
+  interface-authentication: true
+
+# JWT configuration
+jwt:
+  secret: "wvp-pro-go-jwt-secret-key-change-in-production"
+  expire: 24
+  issuer: "wvp-pro-go"
+
+# Logging configuration
+log:
+  level: info         # debug, info, warn, error
+  file-path: ""       # Empty for console only
+  max-size: 100       # MB
+  max-backups: 10
+  max-age: 30         # days
+  compress: true

@@ -92,7 +92,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" min-width="150" show-overflow-tooltip />
-        <el-table-column label="操作" width="370" fixed="right">
+        <el-table-column label="操作" width="300" fixed="right">
           <template v-slot:default="scope">
             <el-button size="medium" :loading="scope.row.playLoading" icon="el-icon-video-play" type="text" @click="play(scope.row)">播放</el-button>
             <el-divider direction="vertical" />
@@ -101,8 +101,6 @@
             <el-button size="medium" icon="el-icon-edit" type="text" @click="edit(scope.row)">
               编辑
             </el-button>
-            <el-divider direction="vertical" />
-            <el-button size="medium" icon="el-icon-cloudy" type="text" @click="queryCloudRecords(scope.row)">云端录像</el-button>
             <el-divider direction="vertical" />
             <el-button size="medium" icon="el-icon-delete" type="text" style="color: #f56c6c" @click="deleteStreamProxy(scope.row)">删除</el-button>
           </template>
@@ -265,9 +263,6 @@ export default {
             type: 'error'
           })
         })
-    },
-    queryCloudRecords: function(row) {
-      this.$router.push(`/cloudRecord/detail/${row.app}/${row.stream}`)
     },
     deleteStreamProxy: function(row) {
       this.$confirm('确定删除此代理吗？', '提示', {

@@ -29,6 +29,7 @@
               class="play-box"
               :class="getPlayerClass(spiltIndex, i)"
               @click="playerIdx = (i-1)"
+              @dblclick="toggleFullScreen(i-1)"
             >
               <div v-if="!videoUrl[i-1]" class="no-signal">{{ videoTip[i-1]?videoTip[i-1]:"无信号" }}</div>
               <player
@@ -148,6 +149,7 @@ export default {
   },
   created() {
     this.checkPlayByParam()
+    this.loadActiveStreams()
   },
   destroyed() {
     clearTimeout(this.updateLooper)
@@ -264,6 +266,37 @@ export default {
     fullScreen: function() {
       if (screenFull.isEnabled) {
         screenFull.toggle(this.$refs.playBox)
+      }
+    },
+    loadActiveStreams: function() {
+      if (this.$route.query.channelId) return
+      // Auto-play all online channels with active streams
+      this.$store.dispatch('commonChanel/getList', {
+        page: 1,
+        count: this.layout[this.spiltIndex].spilt,
+        online: 'true'
+      }).then(data => {
+        if (data && data.list && data.list.length > 0) {
+          data.list.forEach((ch, idx) => {
+            if (idx < this.layout[this.spiltIndex].spilt) {
+              let channelId
+              if (ch.dataType === 3 && ch.gbId >= 100000) {
+                channelId = 'proxy_' + (ch.gbId - 100000)
+              } else {
+                channelId = ch.gbDeviceId || String(ch.gbId)
+              }
+              this.playerIdx = idx
+              this.sendDevicePush(channelId)
+            }
+          })
+          this.playerIdx = 0
+        }
+      })
+    },
+    toggleFullScreen: function(idx) {
+      const playBoxes = this.$refs.playBox.querySelectorAll('.play-box')
+      if (playBoxes[idx] && screenFull.isEnabled) {
+        screenFull.toggle(playBoxes[idx])
       }
     }
   }

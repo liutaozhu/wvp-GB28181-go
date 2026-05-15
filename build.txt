@@ -1,0 +1,72 @@
+编译                                                                                                                           
+    1 # 方式1：使用 Makefile                                                                                                      
+    2 make build                                                                                                                  
+    3                                                                                                                             
+    4 # 方式2：直接编译                                                                                                           
+    5 go build -ldflags="-s -w" -o wvp ./cmd/wvp/                                                                                 
+   运行                                                                                                                           
+    1 # 方式1：使用 Makefile                                                                                                      
+    2 make run                                                                                                                    
+    3                                                                                                                             
+    4 # 方式2：直接运行（不编译）                                                                                                 
+    5 go run ./cmd/wvp/                                                                                                          
+    6                                                                                                                             
+    7 # 方式3：运行已编译的二进制文件（需指定配置文件）                                                                           
+    8 ./wvp ./configs/config.yaml                                                                                                 
+   环境要求                                                                                                                       
+                                                                                                                                  
+   需要以下依赖：                                                                                                                 
+   - Go 1.18+（泛型支持）                                                                                                         
+   - MySQL 数据库                                                                                                                 
+   - Redis                                                                                                                        
+   - ZLMediaKit 媒体服务器                                                                                                        
+                                                                                                                                  
+   运行前确保 ./configs/config.yaml 中配置了正确的数据库、Redis 和 ZLMediaKit 连接信息。
+
+1. 默认管理员账号                                                                                                              
+   - 用户名: admin                                                                                                                
+   - 初始密码: admin123                                                                                                           
+   - 首次启动时自动创建（仅在数据库中没有用户时）                                                                                
+                                                                                                                                  
+   2. 修复的问题                                                                                                                  
+   - 添加了 initDefaultAdmin 函数，在数据库迁移后自动创建默认管理员                                                               
+   - 修复了 utils.Success(nil) 的泛型类型推断错误，改为 utils.SuccessNoData()
+   - CORS 配置添加了 access-token 头支持
+   - AddUser 和 ChangePassword 同时支持 JSON body 和 query params
+
+   3. 启动方式                         
+    1 ./wvp ./configs/config.yaml                                                                                                 
+   4. 前端登录                                                                                                                   
+   访问 http://<服务器IP>:18080，使用 admin / admin123 登录。
+
+ 后端没有配置静态文件服务。有两种方式访问前端：                                                                                 
+                                                                                                                                  
+   方式一：构建前端为静态文件，由 Go 后端 serve（推荐生产环境）                                                                   
+    1 # 1. 进入前端目录，构建生产版本                                                                                             
+    2 cd /home/ltz/work/wvp/wvp-GB28181-go/web                                                                                    
+    3 npm run build:prod                                                                                                          
+    4                                                                                                                             
+    5 # 2. 构建后的文件会输出到 ../src/main/resources/static/                                                                     
+    6 # 然后在 Go 后端添加静态文件服务                                                                                            
+   方式二：单独启动前端开发服务器（开发环境）  
+    1 cd /home/ltz/work/wvp/wvp-GB28181-go/web
+    2 npm run dev
+   前端会运行在 http://localhost:9528，并通过代理转发 API 请求到后端 http://127.0.0.1:18080。
+
+   ---                                
+                                                                                                                                  
+   你想用哪种方式？                                                                                                              
+                                                                                                                                  
+   - 方式二（开发模式） 最快，直接 npm run dev 就能访问                                                                           
+   - 方式一（生产模式） 需要我修改 Go 后端代码来 serve 静态文件，然后构建前端                                                     
+                                               
+   我建议先用方式二快速验证登录是否正常工作。
+
+现在在 Web 端添加拉流代理时，按以下方式填写即可：                                                                                       
+   - 名称: 自定义名称                                                                                                                      
+   - 应用名(App): live                                                                                                                     
+   - 流ID(Stream): 自定义，如 camera01                                                                                                     
+   - 拉流地址(URL): rtsp://192.168.31.111:8554/live                                                                                        
+   - 启用音频: 勾选                                                                                                                        
+   - 启用: 勾选
+

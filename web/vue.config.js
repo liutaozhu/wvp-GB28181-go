@@ -24,7 +24,7 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   publicPath: "/",
-  outputDir: "../src/main/resources/static",
+  outputDir: "dist",
   assetsDir: "static",
   lintOnSave: false, // Disable ESLint to avoid warnings
   productionSourceMap: false,
